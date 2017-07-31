@@ -1,1 +1,2 @@
 # spitting-chicks
+Character: Hyunji
