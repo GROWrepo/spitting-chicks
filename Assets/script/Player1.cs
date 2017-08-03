@@ -128,7 +128,15 @@ public class Player1 : MonoBehaviour {
                 {
                     this.onGround();
                 }
+            } else if(collision.gameObject.tag == "SUPERJUMP")
+            {
+                if(this.SP == STATUS_PLAYER.JUMPING)
+                {
+                    this.onSuperjump();
+                }
+               
             }
+            this.SP = STATUS_PLAYER.IDLE;
         }
 
     }
@@ -137,6 +145,14 @@ public class Player1 : MonoBehaviour {
         this.GetComponent<Animator>().SetBool(this.GetComponent<Animator>().parameters[1].name, false);
         SP = STATUS_PLAYER.IDLE;
     }
+
+    private void onSuperjump()
+    { 
+        this.GetComponent<Rigidbody2D>().AddForce(new Vector2(0, 1.6f * self.getJump()));
+        SP = STATUS_PLAYER.JUMPING;
+
+    }
+
     private void pause()
     {
         if (this.SP == STATUS_PLAYER.PAUSE)
