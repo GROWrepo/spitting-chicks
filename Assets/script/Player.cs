@@ -17,8 +17,8 @@ public class Player
         this.CHealth = 100;
         this.MHealth = 100;
         this.damage = 10.0f;
-        this.speed = 5.0f;
-        this.jump = 700.0f;
+        this.speed = 6.0f;
+        this.jump = 550.0f;
         this.isRight = false;
         this.seeds = 0;
     }
