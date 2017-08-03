@@ -5,23 +5,28 @@ using UnityEngine;
 public class Player1 : MonoBehaviour {
     public STATUS_PLAYER SP, preSTATUS;
     public Player self = new Player();
+
 	// Use this for initialization
 	void Start () {
         this.SP = STATUS_PLAYER.PAUSE;
         this.preSTATUS = STATUS_PLAYER.IDLE;
+
         self.setBullet((GameObject)Resources.Load("Pref/Sphere"));
 	}
 	
 	// Update is called once per frame
 	void Update ()
     {
-        if (this.SP == STATUS_PLAYER.IDLE)
+        if (this.SP == STATUS_PLAYER.IDLE || this.SP == STATUS_PLAYER.SUPERJUMP)
         {
             if (Input.GetKeyDown(KeyCode.W))
             {
-                this.GetComponent<Rigidbody2D>().AddForce(new Vector2(0, self.getJump()));
-                this.GetComponent<Animator>().SetBool(this.GetComponent<Animator>().parameters[1].name, true);
-                this.SP = STATUS_PLAYER.JUMPING;
+                if (this.SP == STATUS_PLAYER.IDLE)
+                {
+                    this.GetComponent<Rigidbody2D>().AddForce(new Vector2(0, self.getJump()));
+                    this.GetComponent<Animator>().SetBool(this.GetComponent<Animator>().parameters[1].name, true);
+                    this.SP = STATUS_PLAYER.JUMPING;
+                }
             }
             else if (Input.GetKey(KeyCode.D))
             {
@@ -136,7 +141,7 @@ public class Player1 : MonoBehaviour {
                 }
                
             }
-            this.SP = STATUS_PLAYER.IDLE;
+            
         }
 
     }
@@ -149,8 +154,9 @@ public class Player1 : MonoBehaviour {
     private void onSuperjump()
     { 
         this.GetComponent<Rigidbody2D>().AddForce(new Vector2(0, 1.6f * self.getJump()));
+        this.GetComponent<Animator>().SetBool(this.GetComponent<Animator>().parameters[1].name, true);
         SP = STATUS_PLAYER.JUMPING;
-
+        SP = STATUS_PLAYER.SUPERJUMP;
     }
 
     private void pause()

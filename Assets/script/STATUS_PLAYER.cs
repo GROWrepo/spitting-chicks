@@ -10,5 +10,6 @@ public enum STATUS_PLAYER
     WALKING,
     JUMPING,
     CROUCHING,
-    PAUSE
+    PAUSE,
+    SUPERJUMP
 }
