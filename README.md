@@ -1,3 +1,8 @@
-# spitting-chicks
+# TODO : write down your name on proper position
 
-Character: Hyunji
+## Manage
++Hanwool
+## Character 
++Hyunji
+## Landscape
+
