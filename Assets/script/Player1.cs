@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -15,13 +16,19 @@ public class Player1 : MonoBehaviour {
 	// Update is called once per frame
 	void Update ()
     {
-        if (this.SP == STATUS_PLAYER.IDLE)
+        if (this.SP == STATUS_PLAYER.IDLE && this.SP == STATUS_PLAYER.SUPERJUMP)
         {
             if (Input.GetKeyDown(KeyCode.W))
             {
                 this.GetComponent<Rigidbody2D>().AddForce(new Vector2(0, self.getJump()));
                 this.GetComponent<Animator>().SetBool(this.GetComponent<Animator>().parameters[1].name, true);
                 this.SP = STATUS_PLAYER.JUMPING;
+                if (this.SP == STATUS_PLAYER.IDLE)
+                {
+                    this.GetComponent<Rigidbody2D>().AddForce(new Vector2(0, self.getJump()));
+                    this.GetComponent<Animator>().SetBool(this.GetComponent<Animator>().parameters[1].name, true);
+                    this.SP = STATUS_PLAYER.JUMPING;
+                }
             }
             else if (Input.GetKey(KeyCode.D))
             {
@@ -129,9 +136,25 @@ public class Player1 : MonoBehaviour {
                     this.onGround();
                 }
             }
+            else if(collision.gameObject.tag == "SUPERJUMP")
+            {
+                if(this.SP == STATUS_PLAYER.JUMPING)
+                {
+                    this.onSuperJump();
+                }
+            }
+            this.SP = STATUS_PLAYER.IDLE;
         }
 
     }
+
+    private void onSuperJump()
+    {
+        this.GetComponent<Rigidbody2D>().AddForce(new Vector2(0, 1.6f * this.self.getJump()));
+        this.GetComponent<Animator>().SetBool(this.GetComponent<Animator>().parameters[1].name, true);
+        SP = STATUS_PLAYER.SUPERJUMP;
+    }
+
     private void onGround()
     {
         this.GetComponent<Animator>().SetBool(this.GetComponent<Animator>().parameters[1].name, false);
