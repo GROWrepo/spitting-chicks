@@ -15,6 +15,6 @@ public class elevator : MonoBehaviour {
 	}
     private void function()
     {
-
+        Debug.Log("my first function");
     }
 }
