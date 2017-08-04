@@ -13,4 +13,8 @@ public class elevator : MonoBehaviour {
 	void Update () {
 		
 	}
+    private void function()
+    {
+
+    }
 }
