@@ -1,9 +1,8 @@
-# spitting-chicks
+# TODO : write down your name on proper position
 
-어렵다!
+## Manage
++ Hanwool
+## Character 
++ Hyunji
+## Landscape
 
-하하!!
-
-하하!
-
-헷갈린다!!
