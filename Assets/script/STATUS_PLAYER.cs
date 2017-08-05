@@ -9,7 +9,6 @@ public enum STATUS_PLAYER
     DEAD,
     WALKING,
     JUMPING,
-    SUPERJUMP,
     CROUCHING,
     PAUSE
 }
