@@ -10,12 +10,16 @@ public class Player1 : MonoBehaviour {
 	void Start () {
         this.SP = STATUS_PLAYER.PAUSE;
         this.preSTATUS = STATUS_PLAYER.IDLE;
-        //self.setBullet((GameObject)Resources.Load("Pref/Sphere"));
+        self.setBullet((GameObject)Resources.Load("Pref/Seed"));
 	}
 	
 	// Update is called once per frame
 	void Update ()
     {
+        if (Input.GetKeyDown(KeyCode.Q))
+        {
+            this.shot(self.getIsRight());
+        }
         if (this.SP == STATUS_PLAYER.IDLE)
         {
             if (Input.GetKeyDown(KeyCode.W))
@@ -161,5 +165,11 @@ public class Player1 : MonoBehaviour {
     private void getSeed(int capacity)
     {
         this.self.setSeeds(capacity);
+    }
+    private void shot(bool isRight)
+    {
+        int multi;
+        multi = isRight ? 1 : -1;
+        GameObject tempBullet = Instantiate(self.getBullet(),this.gameObject.GetComponent<Transform>().position + new Vector3(2.5f * multi, 2.0f),Quaternion.identity);
     }
 }

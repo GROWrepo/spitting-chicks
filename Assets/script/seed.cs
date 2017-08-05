@@ -3,14 +3,25 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class seed : MonoBehaviour {
-
+    public float speed;
+    public float rotate;
+    public bool isRight;
 	// Use this for initialization
 	void Start () {
-		
+        speed = 8.0f;
+        rotate = 20.0f;
+        isRight = false;
 	}
 	
 	// Update is called once per frame
-	void Update () {
-		
-	}
+	void Update ()
+    {
+        this.gameObject.GetComponent<Transform>().Rotate(new Vector3(0, 0, rotate));
+        speed = isRight? 8.0f : -8.0f;
+        Debug.Log(this.gameObject.GetComponent<Transform>().worldToLocalMatrix);
+    }
+    private void setRight(bool isRight)
+    {
+        this.isRight = isRight;
+    }
 }
