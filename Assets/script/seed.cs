@@ -10,15 +10,14 @@ public class seed : MonoBehaviour {
 	void Start () {
         speed = 8.0f;
         rotate = 20.0f;
-        isRight = false;
 	}
 	
 	// Update is called once per frame
 	void Update ()
     {
-        this.gameObject.GetComponent<Transform>().Rotate(new Vector3(0, 0, rotate));
+        this.gameObject.GetComponent<Transform>().GetChild(0).Rotate(new Vector3(0, 0, rotate));
         speed = isRight? 8.0f : -8.0f;
-        Debug.Log(this.gameObject.GetComponent<Transform>().worldToLocalMatrix);
+        this.gameObject.GetComponent<Transform>().Translate(speed * Time.deltaTime,0,0);
     }
     private void setRight(bool isRight)
     {

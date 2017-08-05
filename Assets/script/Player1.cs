@@ -170,6 +170,7 @@ public class Player1 : MonoBehaviour {
     {
         int multi;
         multi = isRight ? 1 : -1;
-        GameObject tempBullet = Instantiate(self.getBullet(),this.gameObject.GetComponent<Transform>().position + new Vector3(2.5f * multi, 2.0f),Quaternion.identity);
+        GameObject tempBullet = Instantiate<GameObject>(self.getBullet(),this.gameObject.GetComponent<Transform>().position + new Vector3(2.5f * multi, 2.0f),Quaternion.identity);
+        tempBullet.SendMessage("setRight", self.getIsRight());
     }
 }
