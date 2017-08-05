@@ -10,7 +10,7 @@ public class Player1 : MonoBehaviour {
 	void Start () {
         this.SP = STATUS_PLAYER.PAUSE;
         this.preSTATUS = STATUS_PLAYER.IDLE;
-        self.setBullet((GameObject)Resources.Load("Pref/Sphere"));
+        //self.setBullet((GameObject)Resources.Load("Pref/Sphere"));
 	}
 	
 	// Update is called once per frame
