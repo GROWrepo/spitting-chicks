@@ -6,11 +6,13 @@ public class teleport : MonoBehaviour {
     public bool isTele;
     public int cool;
     public float time;
+    GameObject dest;
     // Use this for initialization
     void Start () {
         isTele = true;
         cool = 1;
         time = 0.0f;
+        dest = GameObject.Find("Ground (8)");
     }
 	
 	// Update is called once per frame
@@ -34,7 +36,7 @@ public class teleport : MonoBehaviour {
         {
             if(collision.gameObject.tag == "Player" && isTele)
             {
-                collision.gameObject.GetComponent<Transform>().Translate(0, 10, 0);
+                collision.gameObject.GetComponent<Transform>().Translate(dest.GetComponent<Transform>().position - collision.gameObject.GetComponent<Transform>().position + new Vector3(0,1,0));
                 isTele = false;
                 time = cool;
             }
