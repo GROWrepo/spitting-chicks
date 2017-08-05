@@ -23,4 +23,15 @@ public class seed : MonoBehaviour {
     {
         this.isRight = isRight;
     }
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        foreach(ContactPoint2D contacts in collision.contacts)
+        {
+            Debug.Log(collision.gameObject.tag);
+            if(collision.gameObject.tag == "Player")
+            {
+            }
+            Destroy(this.gameObject);
+        }
+    }
 }
