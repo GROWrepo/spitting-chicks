@@ -27,7 +27,6 @@ public class seed : MonoBehaviour {
     {
         foreach(ContactPoint2D contacts in collision.contacts)
         {
-            Debug.Log(collision.gameObject.tag);
             if(collision.gameObject.tag == "Player")
             {
             }
