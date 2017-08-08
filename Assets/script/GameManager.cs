@@ -9,8 +9,13 @@ public class GameManager : MonoBehaviour {
     GUIStyle US = new GUIStyle();
     GameObject players;
     GameObject items;
+    GameObject landscapes;
     bool isSpawn;
     int spawnCoolDown;
+    int cool;
+    public float time;
+    bool isDisa;
+
 	// Use this for initialization
 	void Start () {
         SG = STATUS_GAME.MENU;
@@ -23,8 +28,11 @@ public class GameManager : MonoBehaviour {
         US.fontStyle = FontStyle.Bold;
         players = this.gameObject.GetComponent<Transform>().GetChild(0).GetChild(0).gameObject;
         items = this.gameObject.GetComponent<Transform>().GetChild(0).GetChild(2).gameObject;
+        landscapes = this.gameObject.GetComponent<Transform>().GetChild(0).GetChild(1).gameObject;
         isSpawn = false;
         spawnCoolDown = 100;
+        cool = 4;
+        time = 4.0f;
     }
 	
 	// Update is called once per frame
@@ -75,6 +83,15 @@ public class GameManager : MonoBehaviour {
                     spawnCoolDown = 100;
                 }
             }
+            if (time > 0)
+            {
+                time -= Time.deltaTime;
+            }
+            else
+            {
+                landscapes.GetComponent<Transform>().GetChild(4).gameObject.SetActive(!landscapes.GetComponent<Transform>().GetChild(4).gameObject.activeSelf);
+                time = cool;
+            }
         }
         if(SG == STATUS_GAME.PAUSE)
         {
@@ -102,6 +119,7 @@ public class GameManager : MonoBehaviour {
             {
                 Application.Quit();
             }
+            
         }
     }
     private void setStatus(STATUS_GAME newSG)
