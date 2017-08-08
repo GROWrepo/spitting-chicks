@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour {
     STATUS_GAME SG;
@@ -88,5 +89,23 @@ public class GameManager : MonoBehaviour {
                 Application.Quit();
             }
         }
+        if(SG == STATUS_GAME.END)
+        {
+            Time.timeScale = 0.0f;
+            if (GUI.Button(Menus[0], "Restart Game"))
+            {
+                this.GetComponent<Transform>().GetChild(0).GetChild(0).GetChild(0).SendMessage("pause");
+                SG = STATUS_GAME.PLAYING;
+                SceneManager.LoadScene("sample");
+            }
+            if (GUI.Button(Menus[1], "End Game"))
+            {
+                Application.Quit();
+            }
+        }
+    }
+    private void setStatus(STATUS_GAME newSG)
+    {
+        SG = newSG;
     }
 }
