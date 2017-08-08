@@ -39,6 +39,7 @@ public class watermelon : MonoBehaviour {
     }
     private void isGotten()
     {
+        Debug.Log("Water melon damage +5");
         this.capacity += 5;
         this.gameObject.SetActive(false);
     }
