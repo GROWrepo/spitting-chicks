@@ -32,13 +32,14 @@ public class watermelon : MonoBehaviour {
     {
         if (collision.gameObject.tag == "Player")
         {
-            Debug.Log(collision.gameObject);
             collision.gameObject.GetComponent<Transform>().parent.gameObject.SendMessage("getSeed", this.capacity);
+            collision.gameObject.GetComponent<Transform>().parent.gameObject.SendMessage("hitDamage", this.capacity);
             this.isGotten();
         }
     }
     private void isGotten()
     {
+        Debug.Log("Water melon damage +5");
         this.capacity += 5;
         this.gameObject.SetActive(false);
     }
