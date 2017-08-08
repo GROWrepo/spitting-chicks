@@ -175,10 +175,9 @@ public class Player1 : MonoBehaviour {
     }
     private void hitDamage(int damage)
     {
+        this.self.setCurrentHealth(this.self.getCurrentHealth() - damage);
         if (this.self.getCurrentHealth() > 0)
         {
-            Debug.Log(this.gameObject.GetComponent<Transform>().GetChild(1).GetChild(0).gameObject.name);
-            this.self.setCurrentHealth(this.self.getCurrentHealth() - damage);
             this.gameObject.GetComponent<Transform>().GetChild(1).GetChild(0).localScale = new Vector3((float)this.self.getCurrentHealth() / this.self.getMaxHealth(), 1.0f, 1.0f);
             Debug.Log(this.self.getCurrentHealth());
         }
