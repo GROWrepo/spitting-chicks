@@ -23,7 +23,7 @@ public class Player1 : MonoBehaviour {
                 this.GetComponent<Rigidbody2D>().AddForce(new Vector2(0, self.getJump()));
                 this.GetComponent<Animator>().SetBool(this.GetComponent<Animator>().parameters[1].name, true);
                 this.SP = STATUS_PLAYER.JUMPING;
-            }
+            }       
             else if (Input.GetKey(KeyCode.D))
             {
                 if (!self.getIsRight())
