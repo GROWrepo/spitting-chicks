@@ -186,6 +186,7 @@ public class Player1 : MonoBehaviour {
         else
         {
             Debug.Log("Die Already");
+            this.gameObject.GetComponent<Transform>().parent.parent.parent.gameObject.SendMessage("setStatus", STATUS_GAME.END);
         }
     }
 }
