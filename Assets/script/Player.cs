@@ -4,14 +4,14 @@ using UnityEngine;
 
 public class Player
 {
-    public int CHealth;
-    public int MHealth;
-    public float damage;
-    public float speed;
-    public float jump;
-    public bool isRight;
-    public GameObject bullet;
-    public int seeds;
+    private int CHealth;
+    private int MHealth;
+    private float damage;
+    private float speed;
+    private float jump;
+    private bool isRight;
+    private GameObject bullet;
+    private int seeds;
     public Player()
     {
         this.CHealth = 100;

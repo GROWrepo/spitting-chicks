@@ -173,4 +173,18 @@ public class Player1 : MonoBehaviour {
         GameObject tempBullet = Instantiate<GameObject>(self.getBullet(),this.gameObject.GetComponent<Transform>().position + new Vector3(2.5f * multi, 2.0f),Quaternion.identity);
         tempBullet.SendMessage("setRight", self.getIsRight());
     }
+    private void hitDamage(int damage)
+    {
+        if (this.self.getCurrentHealth() > 0)
+        {
+            Debug.Log(this.gameObject.GetComponent<Transform>().GetChild(1).GetChild(0).gameObject.name);
+            this.self.setCurrentHealth(this.self.getCurrentHealth() - damage);
+            this.gameObject.GetComponent<Transform>().GetChild(1).GetChild(0).localScale = new Vector3((float)this.self.getCurrentHealth() / this.self.getMaxHealth(), 1.0f, 1.0f);
+            Debug.Log(this.self.getCurrentHealth());
+        }
+        else
+        {
+            Debug.Log("Die Already");
+        }
+    }
 }
