@@ -27,13 +27,7 @@ public class Player1 : MonoBehaviour {
                 this.GetComponent<Rigidbody2D>().AddForce(new Vector2(0, self.getJump()));
                 this.GetComponent<Animator>().SetBool(this.GetComponent<Animator>().parameters[1].name, true);
                 this.SP = STATUS_PLAYER.JUMPING;
-                if (this.SP == STATUS_PLAYER.IDLE)
-                {
-                    this.GetComponent<Rigidbody2D>().AddForce(new Vector2(0, self.getJump()));
-                    this.GetComponent<Animator>().SetBool(this.GetComponent<Animator>().parameters[1].name, true);
-                    this.SP = STATUS_PLAYER.JUMPING;
-                }
-            }
+            }       
             else if (Input.GetKey(KeyCode.D))
             {
                 if (!self.getIsRight())
@@ -133,7 +127,7 @@ public class Player1 : MonoBehaviour {
     {
         foreach(ContactPoint2D contact in collision.contacts)
         {
-            if(collision.gameObject.tag == "GROUND")
+            if(collision.gameObject.tag == "GROUND" && collision.gameObject.GetComponent<Transform>().parent.name != "SuperJumps")
             {
                 if(this.SP == STATUS_PLAYER.JUMPING)
                 {
@@ -141,13 +135,18 @@ public class Player1 : MonoBehaviour {
                 }
             } 
         }
-
     }
 
     private void onGround()
     {
         this.GetComponent<Animator>().SetBool(this.GetComponent<Animator>().parameters[1].name, false);
         SP = STATUS_PLAYER.IDLE;
+    }
+
+    private void SuperJumps()
+    {
+        this.GetComponent<Rigidbody2D>().AddForce(new Vector2(0, 1.6f * self.getJump())); //슈퍼점프 높이 조절
+        SP = STATUS_PLAYER.JUMPING;
     }
 
     private void pause()
@@ -162,6 +161,7 @@ public class Player1 : MonoBehaviour {
             this.SP = STATUS_PLAYER.PAUSE;
         }
     }
+
     private void getSeed(int capacity)
     {
         this.self.setSeeds(capacity);
