@@ -42,84 +42,87 @@ public class GameManager : MonoBehaviour {
 
     private void OnGUI()
     {
-        if (SG == STATUS_GAME.MENU)
+        if (SceneManager.GetActiveScene().Equals(SceneManager.GetSceneByName("sample")))
         {
-            Time.timeScale = 0.0f;
-            if (GUI.Button(Menus[0], "Start Game") || Input.GetKeyDown(KeyCode.Space))
+            if (SG == STATUS_GAME.MENU)
             {
-                SG = STATUS_GAME.PLAYING;
-                this.GetComponent<Transform>().GetChild(0).GetChild(0).GetChild(0).SendMessage("pause") ;
-            }
-            if (GUI.Button(Menus[1], "End Game"))
-            {
-                Application.Quit();
-            }
-        }
-        if(SG == STATUS_GAME.PLAYING)
-        {
-            Time.timeScale = 1.0f;
-            if(GUI.Button(Menus[2],"||", US))
-            {
-                this.GetComponent<Transform>().GetChild(0).GetChild(0).GetChild(0).SendMessage("pause");
-                SG = STATUS_GAME.PAUSE;
-            }
-            if (!isSpawn)
-            {
-                if (spawnCoolDown > 0)
+                Time.timeScale = 0.0f;
+                if (GUI.Button(Menus[0], "Start Game") || Input.GetKeyDown(KeyCode.Space))
                 {
-                    spawnCoolDown -= 1;
+                    SG = STATUS_GAME.PLAYING;
+                    this.GetComponent<Transform>().GetChild(0).GetChild(0).GetChild(0).SendMessage("pause");
+                }
+                if (GUI.Button(Menus[1], "End Game"))
+                {
+                    Application.Quit();
+                }
+            }
+            if (SG == STATUS_GAME.PLAYING)
+            {
+                Time.timeScale = 1.0f;
+                if (GUI.Button(Menus[2], "||", US))
+                {
+                    this.GetComponent<Transform>().GetChild(0).GetChild(0).GetChild(0).SendMessage("pause");
+                    SG = STATUS_GAME.PAUSE;
+                }
+                if (!isSpawn)
+                {
+                    if (spawnCoolDown > 0)
+                    {
+                        spawnCoolDown -= 1;
+                    }
+                    else
+                    {
+                        items.GetComponent<Transform>().GetChild(0).gameObject.SetActive(true);
+                        isSpawn = true;
+                    }
                 }
                 else
                 {
-                    items.GetComponent<Transform>().GetChild(0).gameObject.SetActive(true);
-                    isSpawn = true;
+                    if (!items.GetComponent<Transform>().GetChild(0).gameObject.activeSelf)
+                    {
+                        isSpawn = false;
+                        spawnCoolDown = 100;
+                    }
                 }
-            }
-            else
-            {
-                if (!items.GetComponent<Transform>().GetChild(0).gameObject.activeSelf)
+                if (time > 0)
                 {
-                    isSpawn = false;
-                    spawnCoolDown = 100;
+                    time -= Time.deltaTime;
+                }
+                else
+                {
+                    landscapes.GetComponent<Transform>().GetChild(4).gameObject.SetActive(!landscapes.GetComponent<Transform>().GetChild(4).gameObject.activeSelf);
+                    time = cool;
                 }
             }
-            if (time > 0)
+            if (SG == STATUS_GAME.PAUSE)
             {
-                time -= Time.deltaTime;
+                Time.timeScale = 0.0f;
+                if (GUI.Button(Menus[0], "Resume Game"))
+                {
+                    this.GetComponent<Transform>().GetChild(0).GetChild(0).GetChild(0).SendMessage("pause");
+                    SG = STATUS_GAME.PLAYING;
+                }
+                if (GUI.Button(Menus[1], "End Game"))
+                {
+                    Application.Quit();
+                }
             }
-            else
+            if (SG == STATUS_GAME.END)
             {
-                landscapes.GetComponent<Transform>().GetChild(4).gameObject.SetActive(!landscapes.GetComponent<Transform>().GetChild(4).gameObject.activeSelf);
-                time = cool;
+                Time.timeScale = 0.0f;
+                if (GUI.Button(Menus[0], "Restart Game"))
+                {
+                    this.GetComponent<Transform>().GetChild(0).GetChild(0).GetChild(0).SendMessage("pause");
+                    SG = STATUS_GAME.PLAYING;
+                    SceneManager.LoadScene("sample");
+                }
+                if (GUI.Button(Menus[1], "End Game"))
+                {
+                    Application.Quit();
+                }
+
             }
-        }
-        if(SG == STATUS_GAME.PAUSE)
-        {
-            Time.timeScale = 0.0f;
-            if(GUI.Button(Menus[0], "Resume Game"))
-            {
-                this.GetComponent<Transform>().GetChild(0).GetChild(0).GetChild(0).SendMessage("pause");
-                SG = STATUS_GAME.PLAYING;
-            }
-            if (GUI.Button(Menus[1], "End Game"))
-            {
-                Application.Quit();
-            }
-        }
-        if(SG == STATUS_GAME.END)
-        {
-            Time.timeScale = 0.0f;
-            if (GUI.Button(Menus[0], "Restart Game"))
-            {
-                this.GetComponent<Transform>().GetChild(0).GetChild(0).GetChild(0).SendMessage("pause");
-                SG = STATUS_GAME.PLAYING;
-                SceneManager.LoadScene("sample");
-            }
-            if (GUI.Button(Menus[1], "End Game"))
-            {
-                Application.Quit();
-            }
-            
         }
     }
     private void setStatus(STATUS_GAME newSG)
