@@ -1,3 +1,10 @@
-# spitting-chicks
+# TODO : write down your name on proper position
 
-병아리가 수박씨를 뱉는 배틀게임
+## Manage
++ Hanwool
+## Character 
++ Hyunji
++ juha`
+## Landscape
++ Suhyeon
+

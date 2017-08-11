@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -9,12 +10,16 @@ public class Player1 : MonoBehaviour {
 	void Start () {
         this.SP = STATUS_PLAYER.PAUSE;
         this.preSTATUS = STATUS_PLAYER.IDLE;
-        self.setBullet((GameObject)Resources.Load("Pref/Sphere"));
+        self.setBullet((GameObject)Resources.Load("Pref/Seed"));
 	}
 	
 	// Update is called once per frame
 	void Update ()
     {
+        if (Input.GetKeyDown(KeyCode.Q))
+        {
+            this.shot(self.getIsRight());
+        }
         if (this.SP == STATUS_PLAYER.IDLE)
         {
             if (Input.GetKeyDown(KeyCode.W))
@@ -22,7 +27,7 @@ public class Player1 : MonoBehaviour {
                 this.GetComponent<Rigidbody2D>().AddForce(new Vector2(0, self.getJump()));
                 this.GetComponent<Animator>().SetBool(this.GetComponent<Animator>().parameters[1].name, true);
                 this.SP = STATUS_PLAYER.JUMPING;
-            }
+            }       
             else if (Input.GetKey(KeyCode.D))
             {
                 if (!self.getIsRight())
@@ -122,21 +127,28 @@ public class Player1 : MonoBehaviour {
     {
         foreach(ContactPoint2D contact in collision.contacts)
         {
-            if(collision.gameObject.tag == "GROUND")
+            if(collision.gameObject.tag == "GROUND" && collision.gameObject.GetComponent<Transform>().parent.name != "SuperJumps")
             {
                 if(this.SP == STATUS_PLAYER.JUMPING)
                 {
                     this.onGround();
                 }
-            }
+            } 
         }
-
     }
+
     private void onGround()
     {
         this.GetComponent<Animator>().SetBool(this.GetComponent<Animator>().parameters[1].name, false);
         SP = STATUS_PLAYER.IDLE;
     }
+
+    private void SuperJumps()
+    {
+        this.GetComponent<Rigidbody2D>().AddForce(new Vector2(0, 1.6f * self.getJump())); //슈퍼점프 높이 조절
+        SP = STATUS_PLAYER.JUMPING;
+    }
+
     private void pause()
     {
         if (this.SP == STATUS_PLAYER.PAUSE)
@@ -149,8 +161,32 @@ public class Player1 : MonoBehaviour {
             this.SP = STATUS_PLAYER.PAUSE;
         }
     }
+
     private void getSeed(int capacity)
     {
         this.self.setSeeds(capacity);
+    }
+    private void shot(bool isRight)
+    {
+        int multi;
+        multi = isRight ? 1 : -1;
+        GameObject tempBullet = Instantiate<GameObject>(self.getBullet(),this.gameObject.GetComponent<Transform>().position + new Vector3(2.5f * multi, 2.0f),Quaternion.identity);
+        tempBullet.SendMessage("setRight", self.getIsRight());
+    }
+    private void hitDamage(int damage)
+    {
+        Debug.Log(this.gameObject.GetComponent<Transform>().GetChild(1).GetChild(0).gameObject.name);
+        this.self.setCurrentHealth(this.self.getCurrentHealth() - damage);
+        if (this.self.getCurrentHealth() > 0)
+        {
+            this.gameObject.GetComponent<Transform>().GetChild(1).GetChild(0).localScale = new Vector3((float)this.self.getCurrentHealth() / this.self.getMaxHealth(), 1.0f, 1.0f);
+            Debug.Log("Current HP bar Scale :" + (float)this.self.getCurrentHealth() / this.self.getMaxHealth());
+            Debug.Log("Current Health :" + this.self.getCurrentHealth());
+        }
+        else
+        {
+            Debug.Log("Die Already");
+            this.gameObject.GetComponent<Transform>().parent.parent.parent.gameObject.SendMessage("setStatus", STATUS_GAME.END);
+        }
     }
 }

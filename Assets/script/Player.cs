@@ -4,21 +4,21 @@ using UnityEngine;
 
 public class Player
 {
-    public int CHealth;
-    public int MHealth;
-    public float damage;
-    public float speed;
-    public float jump;
-    public bool isRight;
-    public GameObject bullet;
-    public int seeds;
+    private int CHealth;
+    private int MHealth;
+    private float damage;
+    private float speed;
+    private float jump;
+    private bool isRight;
+    private GameObject bullet;
+    private int seeds;
     public Player()
     {
         this.CHealth = 100;
         this.MHealth = 100;
         this.damage = 10.0f;
-        this.speed = 5.0f;
-        this.jump = 700.0f;
+        this.speed = 6.0f;
+        this.jump = 550.0f;
         this.isRight = false;
         this.seeds = 0;
     }
