@@ -45,7 +45,14 @@ public class RObstacle : MonoBehaviour {
             RObstacleTransform.localScale += new Vector3(0, -0.01f, 0);
             bottom = false;
         }
+    }
 
-       
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        Debug.Log(collision.gameObject);
+        if (collision.gameObject.tag == "Player")
+        {
+            collision.gameObject.SendMessage("hitDamage", 10);
+        }
     }
 }
