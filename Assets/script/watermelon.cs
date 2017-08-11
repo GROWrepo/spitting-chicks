@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class watermelon : MonoBehaviour {
-    bool isDown = false;
     int capacity;
 	// Use this for initialization
 	void Start () {
@@ -30,6 +29,8 @@ public class watermelon : MonoBehaviour {
     */
     private void OnTriggerEnter2D(Collider2D collision)
     {
+
+        Debug.Log(collision.gameObject);
         if (collision.gameObject.tag == "Player")
         {
             collision.gameObject.GetComponent<Transform>().parent.gameObject.SendMessage("getSeed", this.capacity);
