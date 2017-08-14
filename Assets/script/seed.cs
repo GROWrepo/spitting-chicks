@@ -29,8 +29,11 @@ public class seed : MonoBehaviour {
     {
         if(collision.gameObject.tag == "Player")
         {
-            collision.gameObject.SendMessage("hitDamage", this.damage);
-            Destroy(this.gameObject);
+            if (collision.gameObject.GetComponent<Player1>().getSP() != STATUS_PLAYER.STUN)
+            {
+                collision.gameObject.SendMessage("hitDamage", this.damage);
+                Destroy(this.gameObject);
+            }
         }
         else if(collision.gameObject.tag == "BULLET")
         {

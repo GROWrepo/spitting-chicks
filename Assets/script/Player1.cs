@@ -250,4 +250,8 @@ public class Player1 : MonoBehaviour {
             }
         }
     }
+    public STATUS_PLAYER getSP()
+    {
+        return this.SP;
+    }
 }
