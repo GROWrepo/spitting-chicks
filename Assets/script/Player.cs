@@ -12,6 +12,7 @@ public class Player
     private bool isRight;
     private GameObject bullet;
     private int seeds;
+    private int stunning;
     public Player()
     {
         this.CHealth = 100;
@@ -21,6 +22,7 @@ public class Player
         this.jump = 550.0f;
         this.isRight = false;
         this.seeds = 0;
+        this.stunning = 2;
     }
 
 #region getter
@@ -56,6 +58,10 @@ public class Player
     {
         return this.seeds;
     }
+    public int getStunning()
+    {
+        return this.stunning;
+    }
 #endregion
 
 #region setter
@@ -90,6 +96,10 @@ public class Player
     public void setSeeds(int seeds)
     {
         this.seeds = seeds;
+    }
+    public void setStunning(int stunning)
+    {
+        this.stunning = stunning;
     }
     #endregion
 

@@ -6,11 +6,17 @@ using UnityEngine;
 public class Player1 : MonoBehaviour {
     public STATUS_PLAYER SP, preSTATUS;
     public Player self = new Player();
+    public float stuned;
+    public int frames;
+    public bool invisible;
 	// Use this for initialization
 	void Start () {
         this.SP = STATUS_PLAYER.PAUSE;
         this.preSTATUS = STATUS_PLAYER.IDLE;
         self.setBullet((GameObject)Resources.Load("Pref/Seed"));
+        stuned = 0.0f;
+        frames = 0;
+        invisible = false;
 	}
 	
 	// Update is called once per frame
@@ -24,8 +30,8 @@ public class Player1 : MonoBehaviour {
         {
             if (Input.GetKeyDown(KeyCode.W))
             {
-                this.GetComponent<Rigidbody2D>().AddForce(new Vector2(0, self.getJump()));
-                this.GetComponent<Animator>().SetBool(this.GetComponent<Animator>().parameters[1].name, true);
+                this.gameObject.GetComponent<Rigidbody2D>().AddForce(new Vector2(0, self.getJump()));
+                this.gameObject.GetComponent<Animator>().SetBool(this.gameObject.GetComponent<Animator>().parameters[1].name, true);
                 this.SP = STATUS_PLAYER.JUMPING;
             }       
             else if (Input.GetKey(KeyCode.D))
@@ -33,10 +39,10 @@ public class Player1 : MonoBehaviour {
                 if (!self.getIsRight())
                 {
                     self.setIsRight(true);
-                    this.GetComponent<Transform>().GetChild(0).GetComponent<Transform>().Rotate(0, 180, 0);
+                    this.gameObject.GetComponent<Transform>().GetChild(0).GetComponent<Transform>().Rotate(0, 180, 0);
                 }
-                this.GetComponent<Transform>().Translate(this.self.getSpeed() * Time.deltaTime, 0, 0);
-                this.GetComponent<Animator>().SetBool(this.GetComponent<Animator>().parameters[0].name, true);
+                this.gameObject.GetComponent<Transform>().Translate(this.self.getSpeed() * Time.deltaTime, 0, 0);
+                this.gameObject.GetComponent<Animator>().SetBool(this.gameObject.GetComponent<Animator>().parameters[0].name, true);
                 this.SP = STATUS_PLAYER.WALKING;
             }
             else if (Input.GetKey(KeyCode.A))
@@ -44,10 +50,10 @@ public class Player1 : MonoBehaviour {
                 if (self.getIsRight())
                 {
                     self.setIsRight(false);
-                    this.GetComponent<Transform>().GetChild(0).GetComponent<Transform>().Rotate(0, 180, 0);
+                    this.gameObject.GetComponent<Transform>().GetChild(0).GetComponent<Transform>().Rotate(0, 180, 0);
                 }
-                this.GetComponent<Transform>().Translate(-this.self.getSpeed() * Time.deltaTime, 0, 0);
-                this.GetComponent<Animator>().SetBool(this.GetComponent<Animator>().parameters[0].name, true);
+                this.gameObject.GetComponent<Transform>().Translate(-this.self.getSpeed() * Time.deltaTime, 0, 0);
+                this.gameObject.GetComponent<Animator>().SetBool(this.gameObject.GetComponent<Animator>().parameters[0].name, true);
                 this.SP = STATUS_PLAYER.WALKING;
             }
         }
@@ -66,36 +72,86 @@ public class Player1 : MonoBehaviour {
                 if (!self.getIsRight())
                 {
                     self.setIsRight(true);
-                    this.GetComponent<Transform>().GetChild(0).GetComponent<Transform>().Rotate(0, 180, 0);
+                    this.gameObject.GetComponent<Transform>().GetChild(0).GetComponent<Transform>().Rotate(0, 180, 0);
                 }
-                this.GetComponent<Transform>().Translate(this.self.getSpeed() * 2 / 3 * Time.deltaTime, 0, 0);
-                this.GetComponent<Animator>().SetBool(this.GetComponent<Animator>().parameters[0].name, true);
+                this.gameObject.GetComponent<Transform>().Translate(this.self.getSpeed() * 2 / 3 * Time.deltaTime, 0, 0);
+                this.gameObject.GetComponent<Animator>().SetBool(this.gameObject.GetComponent<Animator>().parameters[0].name, true);
             }
             else if (Input.GetKey(KeyCode.A))
             {
                 if (self.getIsRight())
                 {
                     self.setIsRight(false);
-                    this.GetComponent<Transform>().GetChild(0).GetComponent<Transform>().Rotate(0, 180, 0);
+                    this.gameObject.GetComponent<Transform>().GetChild(0).GetComponent<Transform>().Rotate(0, 180, 0);
                 }
-                this.GetComponent<Transform>().Translate(-this.self.getSpeed() * 2 / 3 * Time.deltaTime, 0, 0);
-                this.GetComponent<Animator>().SetBool(this.GetComponent<Animator>().parameters[0].name, true);
+                this.gameObject.GetComponent<Transform>().Translate(-this.self.getSpeed() * 2 / 3 * Time.deltaTime, 0, 0);
+                this.gameObject.GetComponent<Animator>().SetBool(this.gameObject.GetComponent<Animator>().parameters[0].name, true);
             }
         }
         if (this.SP == STATUS_PLAYER.STUN)
         {
-
+            if (Input.GetKeyDown(KeyCode.W))
+            {
+                this.gameObject.GetComponent<Rigidbody2D>().AddForce(new Vector2(0, self.getJump()));
+                this.gameObject.GetComponent<Animator>().SetBool(this.gameObject.GetComponent<Animator>().parameters[1].name, true);
+            }
+            else if (Input.GetKey(KeyCode.D))
+            {
+                if (!self.getIsRight())
+                {
+                    self.setIsRight(true);
+                    this.gameObject.GetComponent<Transform>().GetChild(0).GetComponent<Transform>().Rotate(0, 180, 0);
+                }
+                this.gameObject.GetComponent<Transform>().Translate(this.self.getSpeed() * Time.deltaTime, 0, 0);
+                this.gameObject.GetComponent<Animator>().SetBool(this.gameObject.GetComponent<Animator>().parameters[0].name, true);
+            }
+            else if (Input.GetKey(KeyCode.A))
+            {
+                if (self.getIsRight())
+                {
+                    self.setIsRight(false);
+                    this.gameObject.GetComponent<Transform>().GetChild(0).GetComponent<Transform>().Rotate(0, 180, 0);
+                }
+                this.gameObject.GetComponent<Transform>().Translate(-this.self.getSpeed() * Time.deltaTime, 0, 0);
+                this.gameObject.GetComponent<Animator>().SetBool(this.gameObject.GetComponent<Animator>().parameters[0].name, true);
+            }
+            if(stuned > self.getStunning())
+            {
+                this.gameObject.GetComponent<Transform>().GetChild(0).GetChild(0).gameObject.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 1);
+                this.SP = STATUS_PLAYER.IDLE;
+            }
+            else
+            {
+                this.stuned += Time.deltaTime;
+            }
+            if(invisible)
+            {
+                Debug.Log(this.gameObject.GetComponent<Transform>().GetChild(0).GetChild(0).gameObject);
+                this.gameObject.GetComponent<Transform>().GetChild(0).GetChild(0).gameObject.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 0);
+                frames++;
+                if(frames > 5)
+                {
+                    invisible = false;
+                    frames = 0;
+                }
+            }
+            else
+            {
+                this.gameObject.GetComponent<Transform>().GetChild(0).GetChild(0).gameObject.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 1);
+                frames++;
+                if(frames > 5)
+                {
+                    invisible = true;
+                    frames = 0;
+                }
+            }
         }
         if (this.SP == STATUS_PLAYER.WALKING)
         {
-            if(this.GetComponent<Rigidbody2D>().GetPointVelocity(new Vector2(0,0)) == new Vector2(0,0))
-            {
-                
-            }
             if (Input.GetKeyDown(KeyCode.W))
             {
-                this.GetComponent<Rigidbody2D>().AddForce(new Vector2(0, self.getJump()));
-                this.GetComponent<Animator>().SetBool(this.GetComponent<Animator>().parameters[1].name, true);
+                this.gameObject.GetComponent<Rigidbody2D>().AddForce(new Vector2(0, self.getJump()));
+                this.gameObject.GetComponent<Animator>().SetBool(this.gameObject.GetComponent<Animator>().parameters[1].name, true);
                 this.SP = STATUS_PLAYER.JUMPING;
             }
             else if (Input.GetKey(KeyCode.D))
@@ -103,22 +159,22 @@ public class Player1 : MonoBehaviour {
                 if (!self.getIsRight())
                 {
                     self.setIsRight(true);
-                    this.GetComponent<Transform>().GetChild(0).GetComponent<Transform>().Rotate(0, 180, 0);
+                    this.gameObject.GetComponent<Transform>().GetChild(0).GetComponent<Transform>().Rotate(0, 180, 0);
                 }
-                this.GetComponent<Transform>().Translate(this.self.getSpeed() * Time.deltaTime, 0, 0);
+                this.gameObject.GetComponent<Transform>().Translate(this.self.getSpeed() * Time.deltaTime, 0, 0);
             }
             else if (Input.GetKey(KeyCode.A))
             {
                 if (self.getIsRight())
                 {
                     self.setIsRight(false);
-                    this.GetComponent<Transform>().GetChild(0).GetComponent<Transform>().Rotate(0, 180, 0);
+                    this.gameObject.GetComponent<Transform>().GetChild(0).GetComponent<Transform>().Rotate(0, 180, 0);
                 }
-                this.GetComponent<Transform>().Translate(-this.self.getSpeed() * Time.deltaTime, 0, 0);
+                this.gameObject.GetComponent<Transform>().Translate(-this.self.getSpeed() * Time.deltaTime, 0, 0);
             }
             else if(!Input.GetKey(KeyCode.A) && !Input.GetKey(KeyCode.D))
             {
-                this.GetComponent<Animator>().SetBool(this.GetComponent<Animator>().parameters[0].name, false);
+                this.gameObject.GetComponent<Animator>().SetBool(this.gameObject.GetComponent<Animator>().parameters[0].name, false);
                 this.SP = STATUS_PLAYER.IDLE;
             }
         }
@@ -139,13 +195,13 @@ public class Player1 : MonoBehaviour {
 
     private void onGround()
     {
-        this.GetComponent<Animator>().SetBool(this.GetComponent<Animator>().parameters[1].name, false);
+        this.gameObject.GetComponent<Animator>().SetBool(this.gameObject.GetComponent<Animator>().parameters[1].name, false);
         SP = STATUS_PLAYER.IDLE;
     }
 
     private void SuperJumps()
     {
-        this.GetComponent<Rigidbody2D>().AddForce(new Vector2(0, 1.6f * self.getJump())); //슈퍼점프 높이 조절
+        this.gameObject.GetComponent<Rigidbody2D>().AddForce(new Vector2(0, 1.6f * self.getJump())); //슈퍼점프 높이 조절
         SP = STATUS_PLAYER.JUMPING;
     }
 
@@ -184,6 +240,8 @@ public class Player1 : MonoBehaviour {
                 this.gameObject.GetComponent<Transform>().GetChild(1).GetChild(0).localScale = new Vector3((float)this.self.getCurrentHealth() / this.self.getMaxHealth(), 1.0f, 1.0f);
                 Debug.Log("Current HP bar Scale :" + (float)this.self.getCurrentHealth() / this.self.getMaxHealth());
                 Debug.Log("Current Health :" + this.self.getCurrentHealth());
+                this.SP = STATUS_PLAYER.STUN;
+                this.stuned = 0;
             }
             else
             {
