@@ -12,7 +12,7 @@ public class teleport : MonoBehaviour {
         isTele = true;
         cool = 1;
         time = 0.0f;
-        dest = GameObject.Find("Ground (8)");
+        dest = GameObject.Find("Ground (3)");
     }
 	
 	// Update is called once per frame
