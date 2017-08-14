@@ -176,17 +176,20 @@ public class Player1 : MonoBehaviour {
     private void hitDamage(int damage)
     {
         Debug.Log(this.gameObject.GetComponent<Transform>().GetChild(1).GetChild(0).gameObject.name);
-        this.self.setCurrentHealth(this.self.getCurrentHealth() - damage);
-        if (this.self.getCurrentHealth() > 0)
+        if (this.SP != STATUS_PLAYER.STUN)
         {
-            this.gameObject.GetComponent<Transform>().GetChild(1).GetChild(0).localScale = new Vector3((float)this.self.getCurrentHealth() / this.self.getMaxHealth(), 1.0f, 1.0f);
-            Debug.Log("Current HP bar Scale :" + (float)this.self.getCurrentHealth() / this.self.getMaxHealth());
-            Debug.Log("Current Health :" + this.self.getCurrentHealth());
-        }
-        else
-        {
-            Debug.Log("Die Already");
-            this.gameObject.GetComponent<Transform>().parent.parent.parent.gameObject.SendMessage("setStatus", STATUS_GAME.END);
+            this.self.setCurrentHealth(this.self.getCurrentHealth() - damage);
+            if (this.self.getCurrentHealth() > 0)
+            {
+                this.gameObject.GetComponent<Transform>().GetChild(1).GetChild(0).localScale = new Vector3((float)this.self.getCurrentHealth() / this.self.getMaxHealth(), 1.0f, 1.0f);
+                Debug.Log("Current HP bar Scale :" + (float)this.self.getCurrentHealth() / this.self.getMaxHealth());
+                Debug.Log("Current Health :" + this.self.getCurrentHealth());
+            }
+            else
+            {
+                Debug.Log("Die Already");
+                this.gameObject.GetComponent<Transform>().parent.parent.parent.gameObject.SendMessage("setStatus", STATUS_GAME.END);
+            }
         }
     }
 }
