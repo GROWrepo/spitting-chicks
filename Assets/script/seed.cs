@@ -30,8 +30,11 @@ public class seed : MonoBehaviour {
         if(collision.gameObject.tag == "Player")
         {
             collision.gameObject.SendMessage("hitDamage", this.damage);
+            Destroy(this.gameObject);
+        }
+        else if(collision.gameObject.tag == "BULLET")
+        {
 
         }
-        Destroy(this.gameObject);
     }
 }
