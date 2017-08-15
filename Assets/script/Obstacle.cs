@@ -7,8 +7,9 @@ public class Obstacle : MonoBehaviour {
     Transform ObstacleTransform;
     public Vector3 LocalScale;
     public bool top;
-	// Use this for initialization
-	void Start () {
+
+    // Use this for initialization
+    void Start () {
         ObstacleTransform = this.GetComponent<Transform>().GetChild(0);
         LocalScale = ObstacleTransform.localScale;
         top = false;
@@ -42,5 +43,14 @@ public class Obstacle : MonoBehaviour {
 
     }
 
-    
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        Debug.Log(collision.gameObject);
+        if (collision.gameObject.tag == "Player")
+        {
+            collision.gameObject.SendMessage("hitDamage", 10);
+        }
+    }
+  
+
 }

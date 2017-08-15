@@ -4,6 +4,7 @@
 + Hanwool
 ## Character 
 + Hyunji
++ juha
 ## Landscape
 + Suhyeon
 
