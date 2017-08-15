@@ -6,10 +6,12 @@ public class seed : MonoBehaviour {
     public float speed;
     public float rotate;
     public bool isRight;
+    private int damage;
 	// Use this for initialization
 	void Start () {
         speed = 8.0f;
         rotate = 20.0f;
+        damage = 10;
 	}
 	
 	// Update is called once per frame
@@ -23,14 +25,19 @@ public class seed : MonoBehaviour {
     {
         this.isRight = isRight;
     }
-    private void OnCollisionEnter2D(Collision2D collision)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        foreach(ContactPoint2D contacts in collision.contacts)
+        if(collision.gameObject.tag == "Player")
         {
-            if(collision.gameObject.tag == "Player")
+            if (collision.gameObject.GetComponent<Player1>().getSP() != STATUS_PLAYER.STUN)
             {
+                collision.gameObject.SendMessage("hitDamage", this.damage);
+                Destroy(this.gameObject);
             }
-            Destroy(this.gameObject);
+        }
+        else if(collision.gameObject.tag == "BULLET")
+        {
+
         }
     }
 }
